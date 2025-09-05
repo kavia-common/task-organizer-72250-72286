@@ -1,4 +1,4 @@
-# Todo Database (MongoDB) - Data Model and Indexing
+# Todo Database (MongoDB) - Data Model, Indexing, and Seeding
 
 This document describes the MongoDB collections used by the Todo application. It includes field definitions (types and required/optional), how subtasks are modeled using `parent_id`, recommended indexes to support sorting/search/filtering, and sample documents and index creation statements.
 
@@ -8,6 +8,26 @@ Environment variables (from the database container definition):
 
 Example connect command (adjust to your environment):
 - mongosh "$MONGODB_URL" --eval "db = db.getSiblingDB('$MONGODB_DB'); db.getName();"
+
+Quick seeding for demo/validation:
+- Seed script path: `todo_database/seed_sample_data.js` (Node.js)
+- Requirements: Node.js runtime. The script depends on `mongodb` driver (installed via `npm i` in `todo_database/`).
+- It reads `MONGODB_URL` and `MONGODB_DB` from environment; if not set, it attempts to load from `db_visualizer/mongodb.env`.
+
+Usage:
+1) Ensure MongoDB is running (e.g., run `startup.sh` in this folder first).
+2) Set environment variables:
+   export MONGODB_URL="mongodb://appuser:dbuser123@localhost:5000/?authSource=admin"
+   export MONGODB_DB="myapp"
+3) Install deps and run:
+   cd todo_database
+   npm install
+   npm run seed
+
+Notes:
+- The seed script upserts a demo user (email: demo.user@example.com) with a pre-hashed bcrypt password ("Password123!").
+- It creates required indexes and inserts a parent task with several subtasks.
+- Re-running the seed is safe: it removes previously inserted sample tasks tagged with `sample_seed` before inserting again.
 
 --------------------------------------------------------------------------------
 1) Collections Overview

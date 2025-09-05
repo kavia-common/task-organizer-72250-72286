@@ -1,0 +1,14 @@
+{
+  "name": "todo-database-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Utility scripts for seeding and maintaining the Todo MongoDB database.",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "seed": "node seed_sample_data.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.2.0"
+  }
+}
